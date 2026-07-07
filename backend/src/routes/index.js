@@ -46,6 +46,14 @@ function createRouter(deps) {
   } = deps;
 
   const routes = [
+    createRoute("GET", /^\/api\/health$/, async () => ({
+      statusCode: 200,
+      body: httpUtils.createSuccess({
+        status: "ok",
+        requestedStorageProvider: env.storageProvider,
+        storageProvider: env.effectiveStorageProvider,
+      }),
+    })),
     createRoute("GET", /^\/api\/v1\/health$/, async () => ({
       statusCode: 200,
       body: httpUtils.createSuccess({

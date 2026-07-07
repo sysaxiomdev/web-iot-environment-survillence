@@ -2,6 +2,5 @@
 > iot-environmental-surveillance-backend@1.0.0 dev
 > node --watch src/server.js
 
-[2026-07-07T18:19:09.457Z] [api] [INFO] Using MongoDB repository
-[2026-07-07T18:19:09.470Z] [api] [INFO] Backend listening {"port":4000,"requestedStorageProvider":"mongodb","storageProvider":"mongodb"}
-[2026-07-07T18:19:30.062Z] [api] [INFO] Admin login success {"username":"sysaxiomdev@gmail.com"}
+[2026-07-07T18:38:22.722Z] [api] [INFO] Using MongoDB repository
+[2026-07-07T18:38:22.733Z] [api] [INFO] Backend listening {"port":4000,"requestedStorageProvider":"mongodb","storageProvider":"mongodb"}
