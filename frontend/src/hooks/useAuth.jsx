@@ -1,22 +1,26 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { apiRequest } from "../api/client";
-import { ADMIN_BEARER_TOKEN, DEFAULT_ADMIN_PROFILE } from "../constants/auth";
 
 const AuthContext = createContext(null);
-const SESSION_KEY = "env-surveillance-admin-session";
+const TOKEN_KEY = "env-surveillance-admin-token";
+const ADMIN_KEY = "env-surveillance-admin-profile";
+
+function readStoredAdmin() {
+  try {
+    const stored = localStorage.getItem(ADMIN_KEY);
+    return stored ? JSON.parse(stored) : null;
+  } catch (error) {
+    return null;
+  }
+}
 
 export function AuthProvider({ children }) {
-  const token = ADMIN_BEARER_TOKEN;
-  const [sessionActive, setSessionActive] = useState(
-    () => localStorage.getItem(SESSION_KEY) !== "false",
-  );
-  const [admin, setAdmin] = useState(
-    sessionActive ? DEFAULT_ADMIN_PROFILE : null,
-  );
-  const [loading, setLoading] = useState(sessionActive);
+  const [token, setToken] = useState(() => localStorage.getItem(TOKEN_KEY) || "");
+  const [admin, setAdmin] = useState(() => readStoredAdmin());
+  const [loading, setLoading] = useState(Boolean(token));
 
   useEffect(() => {
-    if (!sessionActive) {
+    if (!token) {
       setAdmin(null);
       setLoading(false);
       return;
@@ -28,12 +32,16 @@ export function AuthProvider({ children }) {
     apiRequest("/api/v1/admin/me", { token })
       .then((profile) => {
         if (!cancelled) {
+          localStorage.setItem(ADMIN_KEY, JSON.stringify(profile));
           setAdmin(profile);
         }
       })
       .catch(() => {
         if (!cancelled) {
-          setAdmin(DEFAULT_ADMIN_PROFILE);
+          localStorage.removeItem(TOKEN_KEY);
+          localStorage.removeItem(ADMIN_KEY);
+          setToken("");
+          setAdmin(null);
         }
       })
       .finally(() => {
@@ -45,28 +53,38 @@ export function AuthProvider({ children }) {
     return () => {
       cancelled = true;
     };
-  }, [sessionActive, token]);
+  }, [token]);
 
-  async function login() {
-    const profile = await apiRequest("/api/v1/admin/me", { token });
-    localStorage.setItem(SESSION_KEY, "true");
-    setSessionActive(true);
-    setAdmin(profile);
-    return profile;
+  async function login(credentials) {
+    const result = await apiRequest("/api/v1/admin/login", {
+      method: "POST",
+      body: credentials,
+    });
+
+    localStorage.setItem(TOKEN_KEY, result.token);
+    localStorage.setItem(ADMIN_KEY, JSON.stringify(result.admin));
+    localStorage.removeItem("env-surveillance-admin-session");
+    setToken(result.token);
+    setAdmin(result.admin);
+    return result.admin;
   }
 
   async function logout() {
     try {
-      await apiRequest("/api/v1/admin/logout", {
-        method: "POST",
-        token,
-      });
+      if (token) {
+        await apiRequest("/api/v1/admin/logout", {
+          method: "POST",
+          token,
+        });
+      }
     } catch (error) {
-      // Static token auth stays available even if the API call fails.
+      // The local session is still cleared if the network request fails.
     }
 
-    localStorage.setItem(SESSION_KEY, "false");
-    setSessionActive(false);
+    localStorage.removeItem(TOKEN_KEY);
+    localStorage.removeItem(ADMIN_KEY);
+    localStorage.removeItem("env-surveillance-admin-session");
+    setToken("");
     setAdmin(null);
   }
 
@@ -75,7 +93,7 @@ export function AuthProvider({ children }) {
       value={{
         admin,
         token,
-        isAuthenticated: sessionActive && Boolean(token),
+        isAuthenticated: Boolean(token && admin),
         loading,
         login,
         logout,

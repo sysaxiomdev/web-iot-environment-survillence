@@ -4,6 +4,6 @@ export const ADMIN_BEARER_TOKEN =
 export const ADMIN_AUTH_HEADER = `Bearer ${ADMIN_BEARER_TOKEN}`;
 
 export const DEFAULT_ADMIN_PROFILE = {
-  username: "admin",
+  username: "sysaxiomdev@gmail.com",
   role: "admin",
 };

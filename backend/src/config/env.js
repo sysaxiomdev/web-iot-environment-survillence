@@ -55,23 +55,11 @@ const env = {
     "3d5ee4ecb85730377bed3f9597ad8e946c02872fa5a0f52d8c4e2b4182aec500",
   storageProvider:
     process.env.STORAGE_PROVIDER ||
-    (process.env.MONGO_URI
-      ? "mongodb"
-      : process.env.FIREBASE_PROJECT_ID
-      ? "firestore"
-      : "memory"),
+    (process.env.MONGO_URI ? "mongodb" : "memory"),
   mongoUri: process.env.MONGO_URI || "",
   mongoDbName: process.env.MONGO_DB_NAME || "environmental_surveillance",
   mongoCollectionPrefix:
     process.env.MONGO_COLLECTION_PREFIX || "environmental_surveillance",
-  firestoreCollectionPrefix:
-    process.env.FIRESTORE_COLLECTION_PREFIX || "environmental_surveillance",
-  firebaseProjectId: process.env.FIREBASE_PROJECT_ID || "",
-  firebaseClientEmail: process.env.FIREBASE_CLIENT_EMAIL || "",
-  firebasePrivateKey: (process.env.FIREBASE_PRIVATE_KEY || "").replace(
-    /\\n/g,
-    "\n",
-  ),
   activeDeviceWindowMinutes: readNumber("ACTIVE_DEVICE_WINDOW_MINUTES", 30),
   maxHistoricalResults: readNumber("MAX_HISTORICAL_RESULTS", 500),
   allowStaleReadingsMinutes: readNumber("ALLOW_STALE_READINGS_MINUTES", 10080),

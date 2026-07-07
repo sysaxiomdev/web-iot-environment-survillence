@@ -1,6 +1,4 @@
-const { createFirestoreClient } = require("../lib/firestore");
 const { createMongoClient } = require("../lib/mongo");
-const { FirestoreRepository } = require("./firestoreRepository");
 const { MongoRepository } = require("./mongoRepository");
 const { MemoryRepository } = require("./memoryRepository");
 
@@ -32,24 +30,6 @@ function createRepository(env, logger) {
           reason: error.message,
         });
       }
-    }
-  }
-
-  if (env.storageProvider === "firestore") {
-    try {
-      const db = createFirestoreClient(env);
-      logger.info("Using Firestore repository");
-      const repository = new FirestoreRepository(db, env);
-      repository.storageProvider = "firestore";
-      return repository;
-    } catch (error) {
-      if (env.nodeEnv === "production") {
-        throw error;
-      }
-
-      logger.warn("Falling back to in-memory repository", {
-        reason: error.message,
-      });
     }
   }
 
