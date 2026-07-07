@@ -11,6 +11,7 @@
     "dev": "node --watch src/server.js",
     "start": "node src/server.js",
     "seed": "node src/seed.js",
+    "seed:admin": "node src/seedAdmin.js",
     "build": "node --check src/server.js",
     "check": "node --check src/server.js"
   },

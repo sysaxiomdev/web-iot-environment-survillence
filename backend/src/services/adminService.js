@@ -1,32 +1,34 @@
 class AdminService {
-  constructor(env, auth, HttpError) {
+  constructor(repository, env, auth, HttpError) {
+    this.repository = repository;
     this.env = env;
     this.auth = auth;
     this.HttpError = HttpError;
   }
 
-  login(credentials) {
-    const usernameMatches = this.auth.safeCompare(
-      credentials.username,
-      this.env.adminUsername,
-    );
+  async login(credentials) {
+    const admin = await this.repository.findAdminByUsername(credentials.username);
+    if (!admin) {
+      throw new this.HttpError(401, "Invalid admin credentials");
+    }
+
     const passwordMatches = this.auth.safeCompare(
       credentials.password,
-      this.env.adminPassword,
+      admin.password,
     );
 
-    if (!usernameMatches || !passwordMatches) {
+    if (!passwordMatches) {
       throw new this.HttpError(401, "Invalid admin credentials");
     }
 
     return {
       token: this.auth.createToken(this.env, {
-        sub: this.env.adminUsername,
-        role: "admin",
+        sub: admin.username,
+        role: admin.role || "admin",
       }),
       admin: {
-        username: this.env.adminUsername,
-        role: "admin",
+        username: admin.username,
+        role: admin.role || "admin",
       },
     };
   }
@@ -40,8 +42,7 @@ class AdminService {
 
   getSettings() {
     return {
-      authMode: "static-admin-bearer-token",
-      username: this.env.adminUsername,
+      authMode: "mongo-admin-jwt",
       requestedStorageProvider: this.env.storageProvider,
       storageProvider: this.env.effectiveStorageProvider,
       activeDeviceWindowMinutes: this.env.activeDeviceWindowMinutes,

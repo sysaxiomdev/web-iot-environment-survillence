@@ -48,11 +48,10 @@ const env = {
   nodeEnv: process.env.NODE_ENV || "development",
   port: readNumber("PORT", 4000),
   frontendOrigins: readOrigins("FRONTEND_ORIGIN", ["http://localhost:5173"]),
-  adminUsername: process.env.ADMIN_USERNAME || "admin",
-  adminPassword: process.env.ADMIN_PASSWORD || "admin",
-  adminBearerToken:
-    process.env.ADMIN_BEARER_TOKEN ||
-    "3d5ee4ecb85730377bed3f9597ad8e946c02872fa5a0f52d8c4e2b4182aec500",
+  jwtSecret: process.env.JWT_SECRET || "replace-with-a-long-random-secret",
+  jwtExpiresIn: process.env.JWT_EXPIRES_IN || "12h",
+  seedAdminUsername: process.env.BOOTSTRAP_LOGIN_EMAIL || "",
+  seedAdminPassword: process.env.BOOTSTRAP_LOGIN_PASSWORD || "",
   storageProvider:
     process.env.STORAGE_PROVIDER ||
     (process.env.MONGO_URI ? "mongodb" : "memory"),

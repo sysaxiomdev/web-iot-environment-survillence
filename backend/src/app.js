@@ -17,7 +17,7 @@ const logger = createLogger("api");
 const validation = createValidationHelpers(HttpError);
 const repository = createRepository(env, logger);
 env.effectiveStorageProvider = repository.storageProvider || env.storageProvider;
-const adminService = new AdminService(env, auth, HttpError);
+const adminService = new AdminService(repository, env, auth, HttpError);
 const environmentService = new EnvironmentService(repository, env, HttpError);
 const routeRequest = createRouter({
   env,
@@ -28,6 +28,42 @@ const routeRequest = createRouter({
   auth,
   httpUtils,
   validation,
+});
+
+async function bootstrapAdmin() {
+  if (typeof repository.countAdmins !== "function") {
+    logger.warn("Repository does not support admin bootstrap checks");
+    return;
+  }
+
+  const existingAdmins = await repository.countAdmins();
+  if (existingAdmins > 0) {
+    logger.info("Admin bootstrap skipped; admin already exists", {
+      count: existingAdmins,
+    });
+    return;
+  }
+
+  if (!env.seedAdminUsername || !env.seedAdminPassword) {
+    logger.warn(
+      "No admin account found; set BOOTSTRAP_LOGIN_EMAIL and BOOTSTRAP_LOGIN_PASSWORD once to auto-seed MongoDB on startup",
+    );
+    return;
+  }
+
+  await repository.upsertAdmin({
+    username: env.seedAdminUsername,
+    password: env.seedAdminPassword,
+    role: "admin",
+    enabled: true,
+  });
+  logger.info("Admin account auto-seeded in MongoDB", {
+    username: env.seedAdminUsername,
+  });
+}
+
+const bootstrapPromise = bootstrapAdmin().catch((error) => {
+  logger.error("Admin bootstrap failed", { message: error.message });
 });
 
 async function handleRequest(request, response) {
@@ -44,6 +80,7 @@ async function handleRequest(request, response) {
   }
 
   try {
+    await bootstrapPromise;
     await routeRequest(request, response);
   } catch (error) {
     logger.error("Unhandled server error", { message: error.message });

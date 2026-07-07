@@ -4,3 +4,95 @@
 
 [2026-07-07T18:38:22.722Z] [api] [INFO] Using MongoDB repository
 [2026-07-07T18:38:22.733Z] [api] [INFO] Backend listening {"port":4000,"requestedStorageProvider":"mongodb","storageProvider":"mongodb"}
+Restarting 'src/server.js'
+Restarting 'src/server.js'
+Restarting 'src/server.js'
+Restarting 'src/server.js'
+Restarting 'src/server.js'
+Restarting 'src/server.js'
+Restarting 'src/server.js'
+Restarting 'src/server.js'
+Restarting 'src/server.js'
+Restarting 'src/server.js'
+Restarting 'src/server.js'
+Restarting 'src/server.js'
+Restarting 'src/server.js'
+Restarting 'src/server.js'
+Restarting 'src/server.js'
+Restarting 'src/server.js'
+Restarting 'src/server.js'
+Restarting 'src/server.js'
+Restarting 'src/server.js'
+Restarting 'src/server.js'
+Restarting 'src/server.js'
+Restarting 'src/server.js'
+Restarting 'src/server.js'
+Restarting 'src/server.js'
+Restarting 'src/server.js'
+Restarting 'src/server.js'
+Restarting 'src/server.js'
+[2026-07-07T19:24:26.100Z] [api] [INFO] Using MongoDB repository
+Failed running 'src/server.js'
+Restarting 'src/server.js'
+Restarting 'src/server.js'
+Restarting 'src/server.js'
+Restarting 'src/server.js'
+Restarting 'src/server.js'
+Restarting 'src/server.js'
+Restarting 'src/server.js'
+Restarting 'src/server.js'
+Restarting 'src/server.js'
+Restarting 'src/server.js'
+Restarting 'src/server.js'
+[2026-07-07T19:25:20.464Z] [api] [INFO] Using MongoDB repository
+[2026-07-07T19:25:20.494Z] [api] [INFO] Backend listening {"port":4000,"requestedStorageProvider":"mongodb","storageProvider":"mongodb"}
+Restarting 'src/server.js'
+[2026-07-07T19:25:46.732Z] [api] [INFO] Using MongoDB repository
+Failed running 'src/server.js'
+Restarting 'src/server.js'
+Restarting 'src/server.js'
+[2026-07-07T19:26:27.705Z] [api] [INFO] Using MongoDB repository
+[2026-07-07T19:26:27.751Z] [api] [INFO] Backend listening {"port":4000,"requestedStorageProvider":"mongodb","storageProvider":"mongodb"}
+Restarting 'src/server.js'
+[2026-07-07T19:26:50.253Z] [api] [INFO] Using MongoDB repository
+Failed running 'src/server.js'
+Restarting 'src/server.js'
+[2026-07-07T19:34:59.245Z] [api] [INFO] Using MongoDB repository
+[2026-07-07T19:34:59.259Z] [api] [INFO] Backend listening {"port":4000,"requestedStorageProvider":"mongodb","storageProvider":"mongodb"}
+Restarting 'src/server.js'
+[2026-07-07T19:35:18.748Z] [api] [INFO] Using MongoDB repository
+Failed running 'src/server.js'
+Restarting 'src/server.js'
+[2026-07-07T19:36:48.296Z] [api] [INFO] Using MongoDB repository
+Failed running 'src/server.js'
+Restarting 'src/server.js'
+[2026-07-07T19:37:01.109Z] [api] [INFO] Using MongoDB repository
+Failed running 'src/server.js'
+s'
+Restarting 'src/server.js'
+[2026-07-07T19:34:59.260Z] [api] [INFO] Using MongoDB repository
+Failed running 'src/server.js'
+Restarting 'src/server.js'
+[2026-07-07T19:35:18.773Z] [api] [INFO] Using MongoDB repository
+Failed running 'src/server.js'
+Restarting 'src/server.js'
+[2026-07-07T19:36:48.158Z] [api] [INFO] Using MongoDB repository
+[2026-07-07T19:36:48.183Z] [api] [INFO] B[2026-07-07T19:36:48.196Z] [api] [INFO] Using MongoDB repository
+Failed running 'src/server.js'
+Restarting 'src/server.js'
+[2026-07-07T19:37:01.109Z] [api] [INFO] Using MongoDB repository
+Failed running 'src/server.js'
+'
+[2026-07-07T19:37:01.121Z] [api] [INFO] Using MongoDB repository
+Failed running 'src/server.js'
+starting 'src/server.js'
+[2026-07-07T19:37:01.129Z] [api] [INFO] Using MongoDB repository
+Failed running 'src/server.js'
+om"}
+Restarting 'src/server.js'
+[2026-07-07T19:36:48.232Z] [api] [INFO] Using MongoDB repository
+Failed running 'src/server.js'
+Restarting 'src/server.js'
+[2026-07-07T19:37:01.104Z] [api] [INFO] Using MongoDB repository
+[2026-07-07T19:37:01.121Z] [api] [INFO] Backend listening {"port":4000,"requestedStorageProvider":"mongodb","storageProvider":"mongodb"}
+[2026-07-07T19:37:01.590Z] [api] [INFO] Admin bootstrap skipped; admin already exists {"count":1}

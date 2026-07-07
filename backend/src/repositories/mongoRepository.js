@@ -21,6 +21,7 @@ class MongoRepository {
     this.readingsCollection = db.collection(
       `${env.mongoCollectionPrefix}_readings`,
     );
+    this.adminCollection = db.collection("admin");
   }
 
   createReadingId(userId, nodeId, timestamp) {
@@ -153,6 +154,56 @@ class MongoRepository {
     const sorted = users.filter(Boolean).sort();
     this.setCachedValue("users", sorted);
     return sorted;
+  }
+
+  async countAdmins() {
+    return this.adminCollection.countDocuments({
+      enabled: { $ne: false },
+    });
+  }
+
+  async findAdminByUsername(username) {
+    if (!username) {
+      return null;
+    }
+
+    return (
+      (await this.adminCollection.findOne({
+        username,
+        enabled: { $ne: false },
+      })) || null
+    );
+  }
+
+  async upsertAdmin(admin) {
+    const now = new Date().toISOString();
+    const username = String(admin.username || "").trim();
+    const password = String(admin.password || "");
+
+    if (!username || !password) {
+      throw new Error("Admin username and password are required");
+    }
+
+    const record = {
+      username,
+      password,
+      role: admin.role || "admin",
+      enabled: admin.enabled !== false,
+      updatedAt: now,
+    };
+
+    await this.adminCollection.updateOne(
+      { username },
+      {
+        $set: record,
+        $setOnInsert: {
+          createdAt: now,
+        },
+      },
+      { upsert: true },
+    );
+
+    return this.findAdminByUsername(username);
   }
 
   async saveReading(reading) {

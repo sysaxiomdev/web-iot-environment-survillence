@@ -1,3 +1,2 @@
-Admin : 
-sysaxiomdev@gmail.com
-Sysaxiom@#123
+Admin credentials are stored in the MongoDB admin collection.
+Use `npm run seed:admin -- <admin-email> <admin-password>` from `backend` to update them.

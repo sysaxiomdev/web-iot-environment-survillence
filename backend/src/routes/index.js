@@ -66,7 +66,7 @@ function createRouter(deps) {
       const payload = validation.validateLoginPayload(
         await httpUtils.parseJsonBody(request, HttpError),
       );
-      const result = adminService.login(payload);
+      const result = await adminService.login(payload);
       logger.info("Admin login success", { username: payload.username });
       return {
         statusCode: 200,

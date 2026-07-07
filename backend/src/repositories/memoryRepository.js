@@ -2,6 +2,7 @@ class MemoryRepository {
   constructor() {
     this.devices = new Map();
     this.readings = new Map();
+    this.admins = new Map();
   }
 
   createGeneratedNodeId() {
@@ -34,6 +35,37 @@ class MemoryRepository {
     return Array.from(users).sort();
   }
 
+  async countAdmins() {
+    return Array.from(this.admins.values()).filter((admin) => admin.enabled !== false).length;
+  }
+
+  async findAdminByUsername(username) {
+    const admin = this.admins.get(username);
+    return admin && admin.enabled !== false ? admin : null;
+  }
+
+  async upsertAdmin(admin) {
+    const now = new Date().toISOString();
+    const username = String(admin.username || "").trim();
+    const password = String(admin.password || "");
+
+    if (!username || !password) {
+      throw new Error("Admin username and password are required");
+    }
+
+    const current = this.admins.get(username) || {};
+    const record = {
+      ...current,
+      username,
+      password,
+      role: admin.role || current.role || "admin",
+      enabled: admin.enabled !== false,
+      createdAt: current.createdAt || now,
+      updatedAt: now,
+    };
+    this.admins.set(username, record);
+    return record;
+  }
   async saveReading(reading) {
     const nodeId = reading.nodeId || this.createGeneratedNodeId();
     const serverTimestamp = reading.serverTimestamp || new Date().toISOString();
