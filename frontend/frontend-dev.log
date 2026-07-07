@@ -13,3 +13,13 @@
 [2m11:47:16 pm[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/hooks/useAuth.jsx[22m
 [2m11:47:16 pm[22m [36m[1m[vite][22m[39m [33mhmr invalidate [39m[2m/src/hooks/useAuth.jsx[22m Could not Fast Refresh ("useAuth" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
 [2m11:47:16 pm[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/hooks/useAuth.jsx[22m
+[2m1:17:18 am[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.jsx[22m
+[2m1:17:18 am[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/layouts/AppLayout.jsx[22m
+[2m1:17:28 am[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/styles/main.css[22m
+[2m1:22:08 am[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/ReadingsPage.jsx[22m
+[2m1:22:25 am[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/ReadingsPage.jsx[22m
+[2m1:22:25 am[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/styles/main.css[22m
+[2m1:36:37 am[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/hooks/useAuth.jsx[22m
+[2m1:37:20 am[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/hooks/useAuth.jsx[22m
+[2m1:37:21 am[22m [36m[1m[vite][22m[39m [33mhmr invalidate [39m[2m/src/hooks/useAuth.jsx[22m Could not Fast Refresh ("useAuth" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+[2m1:37:21 am[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/hooks/useAuth.jsx[22m

@@ -41,7 +41,9 @@ function ReadingsPage() {
   const [query, setQuery] = useState(createQuery(filters));
   const [readings, setReadings] = useState([]);
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
   const [loading, setLoading] = useState(true);
+  const [deletingId, setDeletingId] = useState("");
 
   useEffect(() => {
     let cancelled = false;
@@ -80,6 +82,7 @@ function ReadingsPage() {
 
     let cancelled = false;
     setLoading(true);
+    setSuccess("");
 
     apiRequest(`/api/v1/users/${filters.userId}/environmental-data?${query}`, { token })
       .then((data) => {
@@ -106,7 +109,34 @@ function ReadingsPage() {
   function handleSubmit(event) {
     event.preventDefault();
     setError("");
+    setSuccess("");
     setQuery(createQuery(filters));
+  }
+
+  async function handleDelete(reading) {
+    const confirmed = window.confirm(
+      `Delete reading for ${reading.nodeId} at ${formatDateTime(reading.timestamp)}?`,
+    );
+    if (!confirmed) {
+      return;
+    }
+
+    setError("");
+    setSuccess("");
+    setDeletingId(reading.id);
+
+    try {
+      await apiRequest(`/api/v1/admin/readings/${encodeURIComponent(reading.id)}`, {
+        method: "DELETE",
+        token,
+      });
+      setReadings((current) => current.filter((item) => item.id !== reading.id));
+      setSuccess("Reading deleted.");
+    } catch (requestError) {
+      setError(requestError.message || "Unable to delete reading.");
+    } finally {
+      setDeletingId("");
+    }
   }
 
   return (
@@ -181,6 +211,7 @@ function ReadingsPage() {
       </form>
 
       {error ? <div className="form-error">{error}</div> : null}
+      {success ? <div className="form-success">{success}</div> : null}
 
       {loading ? <Loader label="Loading readings..." /> : null}
 
@@ -196,6 +227,7 @@ function ReadingsPage() {
                 <th>Humidity</th>
                 <th>AQI</th>
                 <th>State</th>
+                <th>Action</th>
               </tr>
             </thead>
             <tbody>
@@ -209,6 +241,18 @@ function ReadingsPage() {
                   <td>{formatNumber(reading.aqi)}</td>
                   <td>
                     <StatusPill status={reading.isAbnormal ? "alert" : "normal"} />
+                  </td>
+                  <td>
+                    <button
+                      type="button"
+                      className="icon-button icon-button--danger"
+                      title="Delete reading"
+                      aria-label={`Delete reading ${reading.id}`}
+                      disabled={deletingId === reading.id}
+                      onClick={() => handleDelete(reading)}
+                    >
+                      {deletingId === reading.id ? "..." : "×"}
+                    </button>
                   </td>
                 </tr>
               ))}

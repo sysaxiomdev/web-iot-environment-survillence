@@ -1078,3 +1078,69 @@ th {
     padding-inline: 0.6rem;
   }
 }
+
+.simulator-preview {
+  display: grid;
+  gap: 12px;
+}
+
+.simulator-preview > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--panel-border);
+}
+
+.simulator-preview > div:last-child {
+  border-bottom: 0;
+}
+
+.simulator-preview span {
+  color: var(--text-muted);
+  font-size: 0.82rem;
+}
+
+.simulator-preview strong {
+  color: var(--text-main);
+  font-size: 0.95rem;
+  text-align: right;
+}
+
+.screen-state--compact {
+  min-height: 160px;
+}
+.icon-button {
+  display: inline-grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  border: 1px solid var(--panel-border);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text-main);
+  font-size: 1.2rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.icon-button:hover:not(:disabled) {
+  border-color: rgba(255, 255, 255, 0.32);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.icon-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.icon-button--danger {
+  color: #ffb4a8;
+  border-color: rgba(255, 123, 103, 0.35);
+}
+
+.icon-button--danger:hover:not(:disabled) {
+  background: rgba(255, 87, 70, 0.14);
+  border-color: rgba(255, 123, 103, 0.68);
+}

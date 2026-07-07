@@ -154,6 +154,33 @@ class MemoryRepository {
     return updatedDevice;
   }
 
+  async deleteReading(readingId) {
+    const reading = this.readings.get(readingId);
+    if (!reading) {
+      return null;
+    }
+
+    this.readings.delete(readingId);
+
+    const deviceKey = this.createScopedKey(reading.userId, reading.nodeId);
+    const device = this.devices.get(deviceKey);
+    if (device) {
+      const latestReading =
+        (await this.listReadings({
+          userId: reading.userId,
+          nodeId: reading.nodeId,
+          limit: 1,
+        }))[0] || null;
+      this.devices.set(deviceKey, {
+        ...device,
+        latestReading,
+        lastSeenAt: latestReading?.timestamp || null,
+        updatedAt: new Date().toISOString(),
+      });
+    }
+
+    return reading;
+  }
   async listReadings(filters = {}) {
     let items = Array.from(this.readings.values());
 

@@ -13,9 +13,7 @@ function safeCompare(left, right) {
 }
 
 function createToken(env, payload) {
-  return jwt.sign(payload, env.jwtSecret, {
-    expiresIn: env.jwtExpiresIn,
-  });
+  return jwt.sign(payload, env.jwtSecret);
 }
 
 function verifyToken(env, token, HttpError) {

@@ -131,6 +131,46 @@ function createRouter(deps) {
       }),
       { auth: true },
     ),
+    createRoute(
+      "POST",
+      /^\/api\/v1\/admin\/simulator\/readings$/,
+      async ({ request, tokenPayload }) => {
+        const payload = validation.validateReadingPayload(
+          await httpUtils.parseJsonBody(request, HttpError),
+          env,
+        );
+        const result = await environmentService.ingestReading(payload);
+        logger.info("Simulated reading ingested", {
+          admin: tokenPayload.sub,
+          userId: payload.userId,
+          nodeId: result.reading.nodeId,
+          duplicate: result.duplicate,
+        });
+        return {
+          statusCode: result.duplicate ? 200 : 201,
+          body: httpUtils.createSuccess(result),
+        };
+      },
+      { auth: true },
+    ),
+    createRoute(
+      "DELETE",
+      /^\/api\/v1\/admin\/readings\/(?<readingId>[a-zA-Z0-9_.:-]+)$/,
+      async ({ params, tokenPayload }) => {
+        const deleted = await environmentService.deleteReading(params.readingId);
+        logger.info("Reading deleted", {
+          admin: tokenPayload.sub,
+          readingId: params.readingId,
+          userId: deleted.userId,
+          nodeId: deleted.nodeId,
+        });
+        return {
+          statusCode: 200,
+          body: httpUtils.createSuccess({ reading: deleted }),
+        };
+      },
+      { auth: true },
+    ),
     createRoute("POST", /^\/api\/v1\/environmental-data$/, async ({ request }) => {
       const payload = validation.validateReadingPayload(
         await httpUtils.parseJsonBody(request, HttpError),

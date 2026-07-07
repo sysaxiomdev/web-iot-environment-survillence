@@ -17,7 +17,7 @@ function readStoredAdmin() {
 export function AuthProvider({ children }) {
   const [token, setToken] = useState(() => localStorage.getItem(TOKEN_KEY) || "");
   const [admin, setAdmin] = useState(() => readStoredAdmin());
-  const [loading, setLoading] = useState(Boolean(token));
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (!token) {
@@ -27,8 +27,6 @@ export function AuthProvider({ children }) {
     }
 
     let cancelled = false;
-    setLoading(true);
-
     apiRequest("/api/v1/admin/me", { token })
       .then((profile) => {
         if (!cancelled) {
@@ -37,17 +35,7 @@ export function AuthProvider({ children }) {
         }
       })
       .catch(() => {
-        if (!cancelled) {
-          localStorage.removeItem(TOKEN_KEY);
-          localStorage.removeItem(ADMIN_KEY);
-          setToken("");
-          setAdmin(null);
-        }
-      })
-      .finally(() => {
-        if (!cancelled) {
-          setLoading(false);
-        }
+        // Keep the stored session. A network hiccup should not force a fresh login.
       });
 
     return () => {

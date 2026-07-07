@@ -7,6 +7,7 @@ const navItems = [
   { to: "/swagger", label: "Swagger" },
   { to: "/devices", label: "Devices" },
   { to: "/readings", label: "Readings" },
+  { to: "/simulator", label: "Simulator" },
   { to: "/alerts", label: "Alerts" },
   { to: "/settings", label: "Settings" },
 ];

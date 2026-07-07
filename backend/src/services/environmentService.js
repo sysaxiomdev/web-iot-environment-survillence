@@ -96,6 +96,14 @@ class EnvironmentService {
     return this.repository.listReadings(filters);
   }
 
+  async deleteReading(readingId) {
+    const deleted = await this.repository.deleteReading(readingId);
+    if (!deleted) {
+      throw new this.HttpError(404, "Reading not found");
+    }
+    return deleted;
+  }
+
   async getReadingsForDevice(nodeId, filters = {}) {
     await this.getDevice(nodeId, filters.userId);
     return this.repository.listReadings({

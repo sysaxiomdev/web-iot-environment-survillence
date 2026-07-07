@@ -10,6 +10,7 @@ import DevicesPage from "./pages/DevicesPage";
 import LoginPage from "./pages/LoginPage";
 import ReadingsPage from "./pages/ReadingsPage";
 import SettingsPage from "./pages/SettingsPage";
+import SimulatorPage from "./pages/SimulatorPage";
 
 const SwaggerPage = lazy(() => import("./pages/SwaggerPage"));
 
@@ -32,6 +33,7 @@ function App() {
           <Route path="/devices" element={<DevicesPage />} />
           <Route path="/devices/:userId/:nodeId" element={<DeviceDetailsPage />} />
           <Route path="/readings" element={<ReadingsPage />} />
+          <Route path="/simulator" element={<SimulatorPage />} />
           <Route path="/alerts" element={<AlertsPage />} />
           <Route path="/settings" element={<SettingsPage />} />
         </Route>

@@ -313,6 +313,53 @@ class MongoRepository {
     return result.value || null;
   }
 
+  async deleteReading(readingId) {
+    if (!readingId) {
+      return null;
+    }
+
+    const reading = await this.readingsCollection.findOne({ id: readingId });
+    if (!reading) {
+      return null;
+    }
+
+    await this.readingsCollection.deleteOne({ id: readingId });
+
+    const deviceKey = this.createDeviceDocId(reading.userId, reading.nodeId);
+    const latestReading =
+      (await this.listReadings({
+        userId: reading.userId,
+        nodeId: reading.nodeId,
+        limit: 1,
+      }))[0] || null;
+
+    if (latestReading) {
+      await this.devicesCollection.updateOne(
+        { id: deviceKey },
+        {
+          $set: {
+            latestReading,
+            lastSeenAt: latestReading.timestamp,
+            updatedAt: new Date().toISOString(),
+          },
+        },
+      );
+    } else {
+      await this.devicesCollection.updateOne(
+        { id: deviceKey },
+        {
+          $set: {
+            latestReading: null,
+            lastSeenAt: null,
+            updatedAt: new Date().toISOString(),
+          },
+        },
+      );
+    }
+
+    this.invalidateCache("users");
+    return this.normalizeStoredReading(reading);
+  }
   async listReadings(filters = {}) {
     const requestedLimit =
       filters.limit === undefined ? this.env.maxHistoricalResults : Math.max(1, filters.limit);

@@ -1,0 +1,134 @@
+[2m1:36:37 am[22m [31m[1m[vite][22m[39m [31mInternal server error: C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\src\hooks\useAuth.jsx: Missing semicolon. (37:23)
+
+[0m [90m 35 |[31m         }
+ [90m 36 |[31m       })
+[31m[1m>[22m[31m[90m 37 |[31m       [33m.[31m[36mcatch[31m(() [33m=>[31m {[32m`r`[31mn        [90m// Keep the stored session. A network hiccup should not force a fresh login.`r`n      });[31m
+ [90m    |[31m                        [31m[1m^[22m[31m
+ [90m 38 |[31m
+ [90m 39 |[31m     [36mreturn[31m () [33m=>[31m {
+ [90m 40 |[31m       cancelled [33m=[31m [36mtrue[31m[33m;[31m[0m[39m
+  Plugin: [35mvite:react-babel[39m
+  File: [36mC:/Users/sulth/workspace/sysaxiom/sysaxiom_apps/z_iot/web-iot-environment-survillence/frontend/src/hooks/useAuth.jsx[39m:37:23
+[33m  35 |          }
+  36 |        })
+  37 |        .catch(() => {`r`n        // Keep the stored session. A network hiccup should not force a fresh login.`r`n      });
+     |                         ^
+  38 |  
+  39 |      return () => {[39m
+      at constructor (C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:365:19)
+      at JSXParserMixin.raise (C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:6599:19)
+      at JSXParserMixin.semicolon (C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:6895:10)
+      at JSXParserMixin.parseExpressionStatement (C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:13285:10)
+      at JSXParserMixin.parseStatementContent (C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:12899:19)
+      at JSXParserMixin.parseStatementLike (C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:12767:17)
+      at JSXParserMixin.parseStatementListItem (C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:12747:17)
+      at JSXParserMixin.parseBlockOrModuleBlockBody (C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:13316:61)
+      at JSXParserMixin.parseBlockBody (C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:13309:10)
+      at JSXParserMixin.parseBlock (C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:13297:10)
+      at JSXParserMixin.parseFunctionBody (C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:12100:24)
+      at JSXParserMixin.parseArrowExpression (C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:12075:10)
+      at JSXParserMixin.parseParenAndDistinguishExpression (C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:11687:12)
+      at JSXParserMixin.parseExprAtom (C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:11331:23)
+      at JSXParserMixin.parseExprAtom (C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:4764:20)
+      at JSXParserMixin.parseExprSubscripts (C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:11081:23)
+      at JSXParserMixin.parseUpdate (C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:11066:21)
+      at JSXParserMixin.parseMaybeUnary (C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:11046:23)
+      at JSXParserMixin.parseMaybeUnaryOrPrivate (C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:10899:61)
+      at JSXParserMixin.parseExprOps (C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:10904:23)
+      at JSXParserMixin.parseMaybeConditional (C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:10881:23)
+      at JSXParserMixin.parseMaybeAssign (C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:10831:21)
+      at C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:10800:39
+      at JSXParserMixin.allowInAnd (C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:12426:12)
+      at JSXParserMixin.parseMaybeAssignAllowIn (C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:10800:17)
+      at JSXParserMixin.parseMaybeAssignAllowInOrVoidPattern (C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:12493:17)
+      at JSXParserMixin.parseExprListItem (C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:12175:18)
+      at JSXParserMixin.parseCallExpressionArguments (C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:11252:22)
+      at JSXParserMixin.parseCoverCallAndAsyncArrowHead (C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:11186:29)
+      at JSXParserMixin.parseSubscript (C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:11120:19)
+      at JSXParserMixin.parseSubscripts (C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:11094:19)
+      at JSXParserMixin.parseExprSubscripts (C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:11085:17)
+      at JSXParserMixin.parseUpdate (C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:11066:21)
+      at JSXParserMixin.parseMaybeUnary (C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:11046:23)
+      at JSXParserMixin.parseMaybeUnaryOrPrivate (C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:10899:61)
+      at JSXParserMixin.parseExprOps (C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:10904:23)
+      at JSXParserMixin.parseMaybeConditional (C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:10881:23)
+      at JSXParserMixin.parseMaybeAssign (C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:10831:21)
+      at JSXParserMixin.parseExpressionBase (C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:10784:23)
+      at C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:10780:39
+      at JSXParserMixin.allowInAnd (C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:12421:16)
+      at JSXParserMixin.parseExpression (C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:10780:17)
+      at JSXParserMixin.parseStatementContent (C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:12895:23)
+      at JSXParserMixin.parseStatementLike (C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:12767:17)
+      at JSXParserMixin.parseStatementListItem (C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:12747:17)
+      at JSXParserMixin.parseBlockOrModuleBlockBody (C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:13316:61)
+      at JSXParserMixin.parseBlockBody (C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:13309:10)
+      at JSXParserMixin.parseBlock (C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:13297:10)
+      at JSXParserMixin.parseFunctionBody (C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:12100:24)
+      at JSXParserMixin.parseArrowExpression (C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:12075:10)
+[2m1:36:37 am[22m [31m[1m[vite][22m[39m [31mInternal server error: C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\src\hooks\useAuth.jsx: Missing semicolon. (37:23)
+
+[0m [90m 35 |[31m         }
+ [90m 36 |[31m       })
+[31m[1m>[22m[31m[90m 37 |[31m       [33m.[31m[36mcatch[31m(() [33m=>[31m {[32m`r`[31mn        [90m// Keep the stored session. A network hiccup should not force a fresh login.`r`n      });[31m
+ [90m    |[31m                        [31m[1m^[22m[31m
+ [90m 38 |[31m
+ [90m 39 |[31m     [36mreturn[31m () [33m=>[31m {
+ [90m 40 |[31m       cancelled [33m=[31m [36mtrue[31m[33m;[31m[0m[39m
+  Plugin: [35mvite:react-babel[39m
+  File: [36mC:/Users/sulth/workspace/sysaxiom/sysaxiom_apps/z_iot/web-iot-environment-survillence/frontend/src/hooks/useAuth.jsx[39m:37:23
+[33m  35 |          }
+  36 |        })
+  37 |        .catch(() => {`r`n        // Keep the stored session. A network hiccup should not force a fresh login.`r`n      });
+     |                         ^
+  38 |  
+  39 |      return () => {[39m
+      at constructor (C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:365:19)
+      at JSXParserMixin.raise (C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:6599:19)
+      at JSXParserMixin.semicolon (C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:6895:10)
+      at JSXParserMixin.parseExpressionStatement (C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:13285:10)
+      at JSXParserMixin.parseStatementContent (C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:12899:19)
+      at JSXParserMixin.parseStatementLike (C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:12767:17)
+      at JSXParserMixin.parseStatementListItem (C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:12747:17)
+      at JSXParserMixin.parseBlockOrModuleBlockBody (C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:13316:61)
+      at JSXParserMixin.parseBlockBody (C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:13309:10)
+      at JSXParserMixin.parseBlock (C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:13297:10)
+      at JSXParserMixin.parseFunctionBody (C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:12100:24)
+      at JSXParserMixin.parseArrowExpression (C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:12075:10)
+      at JSXParserMixin.parseParenAndDistinguishExpression (C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:11687:12)
+      at JSXParserMixin.parseExprAtom (C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:11331:23)
+      at JSXParserMixin.parseExprAtom (C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:4764:20)
+      at JSXParserMixin.parseExprSubscripts (C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:11081:23)
+      at JSXParserMixin.parseUpdate (C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:11066:21)
+      at JSXParserMixin.parseMaybeUnary (C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:11046:23)
+      at JSXParserMixin.parseMaybeUnaryOrPrivate (C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:10899:61)
+      at JSXParserMixin.parseExprOps (C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:10904:23)
+      at JSXParserMixin.parseMaybeConditional (C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:10881:23)
+      at JSXParserMixin.parseMaybeAssign (C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:10831:21)
+      at C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:10800:39
+      at JSXParserMixin.allowInAnd (C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:12426:12)
+      at JSXParserMixin.parseMaybeAssignAllowIn (C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:10800:17)
+      at JSXParserMixin.parseMaybeAssignAllowInOrVoidPattern (C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:12493:17)
+      at JSXParserMixin.parseExprListItem (C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:12175:18)
+      at JSXParserMixin.parseCallExpressionArguments (C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:11252:22)
+      at JSXParserMixin.parseCoverCallAndAsyncArrowHead (C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:11186:29)
+      at JSXParserMixin.parseSubscript (C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:11120:19)
+      at JSXParserMixin.parseSubscripts (C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:11094:19)
+      at JSXParserMixin.parseExprSubscripts (C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:11085:17)
+      at JSXParserMixin.parseUpdate (C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:11066:21)
+      at JSXParserMixin.parseMaybeUnary (C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:11046:23)
+      at JSXParserMixin.parseMaybeUnaryOrPrivate (C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:10899:61)
+      at JSXParserMixin.parseExprOps (C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:10904:23)
+      at JSXParserMixin.parseMaybeConditional (C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:10881:23)
+      at JSXParserMixin.parseMaybeAssign (C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:10831:21)
+      at JSXParserMixin.parseExpressionBase (C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:10784:23)
+      at C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:10780:39
+      at JSXParserMixin.allowInAnd (C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:12421:16)
+      at JSXParserMixin.parseExpression (C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:10780:17)
+      at JSXParserMixin.parseStatementContent (C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:12895:23)
+      at JSXParserMixin.parseStatementLike (C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:12767:17)
+      at JSXParserMixin.parseStatementListItem (C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:12747:17)
+      at JSXParserMixin.parseBlockOrModuleBlockBody (C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:13316:61)
+      at JSXParserMixin.parseBlockBody (C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:13309:10)
+      at JSXParserMixin.parseBlock (C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:13297:10)
+      at JSXParserMixin.parseFunctionBody (C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:12100:24)
+      at JSXParserMixin.parseArrowExpression (C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\frontend\node_modules\@babel\parser\lib\index.js:12075:10)
