@@ -1,0 +1,24 @@
+{
+  "name": "iot-environmental-surveillance-backend",
+  "version": "1.0.0",
+  "private": true,
+  "type": "commonjs",
+  "engines": {
+    "node": "20.x"
+  },
+  "main": "src/server.js",
+  "scripts": {
+    "dev": "node --watch src/server.js",
+    "start": "node src/server.js",
+    "seed": "node src/seed.js",
+    "build": "node --check src/server.js",
+    "check": "node --check src/server.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "firebase-admin": "^12.7.0",
+    "iot-environmental-surveillance-app": "file:..",
+    "jsonwebtoken": "^9.0.2",
+    "mongodb": "^7.2.0"
+  }
+}
