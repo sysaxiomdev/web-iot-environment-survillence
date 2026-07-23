@@ -131,6 +131,37 @@ function createValidationHelpers(HttpError) {
     return update;
   }
 
+
+  function parsePositiveInteger(value, fieldName, fallback, max) {
+    if (value === null || value === undefined || value === "") {
+      return fallback;
+    }
+
+    const parsed = Math.floor(toNumber(value, fieldName));
+    if (parsed < 1) {
+      throw new HttpError(400, `${fieldName} must be at least 1`);
+    }
+
+    return max ? Math.min(parsed, max) : parsed;
+  }
+
+  function parseTableQuery(searchParams, options = {}) {
+    const allowedSortFields = options.allowedSortFields || [];
+    const defaultSortBy = options.defaultSortBy || allowedSortFields[0] || "id";
+    const requestedSortBy = searchParams.get("sortBy") || defaultSortBy;
+    const sortBy = allowedSortFields.includes(requestedSortBy) ? requestedSortBy : defaultSortBy;
+    const sortDir = searchParams.get("sortDir") === "asc" ? "asc" : "desc";
+    const pageSize = parsePositiveInteger(searchParams.get("pageSize"), "pageSize", 10, 100);
+
+    return {
+      paginated: searchParams.has("page") || searchParams.has("pageSize"),
+      page: parsePositiveInteger(searchParams.get("page"), "page", 1),
+      pageSize,
+      search: String(searchParams.get("search") || "").trim(),
+      sortBy,
+      sortDir,
+    };
+  }
   function parseReadingFilters(searchParams, env) {
     const rawLimit = searchParams.get("limit");
     const limit = rawLimit === null
@@ -155,6 +186,7 @@ function createValidationHelpers(HttpError) {
 
   return {
     parseReadingFilters,
+    parseTableQuery,
     validateDevicePatchPayload,
     validateLoginPayload,
     validateNodeId,

@@ -20,6 +20,53 @@ function computeAbnormal(reading) {
   );
 }
 
+
+function getSortableValue(item, sortBy) {
+  if (sortBy === "temperature") {
+    return item.latestReading?.temperature ?? item.temperature ?? "";
+  }
+  if (sortBy === "humidity") {
+    return item.latestReading?.humidity ?? item.humidity ?? "";
+  }
+  if (sortBy === "aqi") {
+    return item.latestReading?.aqi ?? item.aqi ?? "";
+  }
+  if (sortBy === "state") {
+    return item.isAbnormal ? 1 : 0;
+  }
+  return item[sortBy] ?? "";
+}
+
+function searchMatches(item, search, fields) {
+  if (!search) {
+    return true;
+  }
+  const needle = search.toLowerCase();
+  return fields.some((field) => String(item[field] || "").toLowerCase().includes(needle));
+}
+
+function paginateItems(items, options, searchFields) {
+  const page = Math.max(1, options.page || 1);
+  const pageSize = Math.max(1, options.pageSize || 10);
+  const direction = options.sortDir === "asc" ? 1 : -1;
+  const filtered = items.filter((item) => searchMatches(item, options.search, searchFields));
+  const sorted = [...filtered].sort((left, right) => {
+    const leftValue = getSortableValue(left, options.sortBy);
+    const rightValue = getSortableValue(right, options.sortBy);
+    return String(leftValue).localeCompare(String(rightValue), undefined, { numeric: true }) * direction;
+  });
+
+  return {
+    items: sorted.slice((page - 1) * pageSize, page * pageSize),
+    total: filtered.length,
+    page,
+    pageSize,
+    totalPages: Math.max(1, Math.ceil(filtered.length / pageSize)),
+    sortBy: options.sortBy,
+    sortDir: options.sortDir,
+    search: options.search || "",
+  };
+}
 function buildAlerts(reading, env) {
   const readingTimestamp = reading.timestamp || reading.serverTimestamp;
   const ageMinutes =
@@ -68,6 +115,26 @@ class EnvironmentService {
     }));
   }
 
+  async listDevicesPage(filters = {}) {
+    if (typeof this.repository.listDevicesPage === "function") {
+      const page = await this.repository.listDevicesPage(filters);
+      return {
+        ...page,
+        items: page.items.map((device) => ({
+          ...device,
+          status: computeDeviceStatus(device, this.env),
+        })),
+      };
+    }
+
+    return paginateItems(await this.listDevices(filters), filters, [
+      "userId",
+      "nodeId",
+      "name",
+      "location",
+    ]);
+  }
+
   async getDevice(nodeId, userId) {
     const device = await this.repository.getDevice(nodeId, userId);
     if (!device) {
@@ -94,6 +161,17 @@ class EnvironmentService {
 
   async listReadings(filters) {
     return this.repository.listReadings(filters);
+  }
+
+  async listReadingsPage(filters = {}) {
+    if (typeof this.repository.listReadingsPage === "function") {
+      return this.repository.listReadingsPage(filters);
+    }
+
+    return paginateItems(await this.repository.listReadings(filters), filters, [
+      "userId",
+      "nodeId",
+    ]);
   }
 
   async deleteReading(readingId) {

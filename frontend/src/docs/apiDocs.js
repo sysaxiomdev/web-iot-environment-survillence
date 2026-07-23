@@ -34,7 +34,7 @@ export const apiDocSections = [
   },
   {
     title: "Users",
-    description: "User-first access to the Firestore surveillance data model.",
+    description: "User-first access to the MongoDB surveillance data model.",
     endpoints: [
       {
         method: "GET",

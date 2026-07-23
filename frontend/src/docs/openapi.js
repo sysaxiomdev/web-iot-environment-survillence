@@ -109,7 +109,7 @@ export function createOpenApiSpec(apiBaseUrl = defaultApiBaseUrl) {
           properties: {
             user_id: {
               type: "string",
-              description: "User ID in Firestore",
+              description: "User ID in MongoDB",
               example: "34dbNI5JJ9QqZl49vqWsPhxjbf72",
             },
             userId: {

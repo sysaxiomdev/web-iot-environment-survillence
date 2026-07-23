@@ -317,16 +317,26 @@ function createRouter(deps) {
     createRoute(
       "GET",
       /^\/api\/v1\/users\/(?<userId>[a-zA-Z0-9_-]+)\/environmental-data$/,
-      async ({ params, searchParams }) => ({
-        statusCode: 200,
-        body: httpUtils.createSuccess(
-          await environmentService.listReadings({
-            ...validation.parseReadingFilters(searchParams, env),
-            userId: validation.validateUserId(params.userId),
-          }),
-        ),
-      }),
-      { auth: false },
+      async ({ params, searchParams }) => {
+        const tableQuery = validation.parseTableQuery(searchParams, {
+          allowedSortFields: ["timestamp", "userId", "nodeId", "temperature", "humidity", "aqi", "state"],
+          defaultSortBy: "timestamp",
+        });
+        const filters = {
+          ...validation.parseReadingFilters(searchParams, env),
+          ...tableQuery,
+          userId: validation.validateUserId(params.userId),
+        };
+        return {
+          statusCode: 200,
+          body: httpUtils.createSuccess(
+            tableQuery.paginated
+              ? await environmentService.listReadingsPage(filters)
+              : await environmentService.listReadings(filters),
+          ),
+        };
+      },
+      { auth: true },
     ),
     createRoute(
       "GET",
@@ -359,36 +369,66 @@ function createRouter(deps) {
     createRoute(
       "GET",
       /^\/api\/v1\/environmental-data$/,
-      async ({ searchParams }) => ({
-        statusCode: 200,
-        body: httpUtils.createSuccess(
-          await environmentService.listReadings(
-            validation.parseReadingFilters(searchParams, env),
+      async ({ searchParams }) => {
+        const tableQuery = validation.parseTableQuery(searchParams, {
+          allowedSortFields: ["timestamp", "userId", "nodeId", "temperature", "humidity", "aqi", "state"],
+          defaultSortBy: "timestamp",
+        });
+        const filters = {
+          ...validation.parseReadingFilters(searchParams, env),
+          ...tableQuery,
+        };
+        return {
+          statusCode: 200,
+          body: httpUtils.createSuccess(
+            tableQuery.paginated
+              ? await environmentService.listReadingsPage(filters)
+              : await environmentService.listReadings(filters),
           ),
-        ),
-      }),
+        };
+      },
       { auth: true },
     ),
     createRoute(
       "GET",
       /^\/api\/v1\/devices$/,
-      async () => ({
-        statusCode: 200,
-        body: httpUtils.createSuccess(await environmentService.listDevices()),
-      }),
+      async ({ searchParams }) => {
+        const tableQuery = validation.parseTableQuery(searchParams, {
+          allowedSortFields: ["userId", "nodeId", "name", "location", "lastSeenAt", "temperature", "humidity", "aqi"],
+          defaultSortBy: "lastSeenAt",
+        });
+        return {
+          statusCode: 200,
+          body: httpUtils.createSuccess(
+            tableQuery.paginated
+              ? await environmentService.listDevicesPage(tableQuery)
+              : await environmentService.listDevices(),
+          ),
+        };
+      },
       { auth: true },
     ),
     createRoute(
       "GET",
       /^\/api\/v1\/users\/(?<userId>[a-zA-Z0-9_-]+)\/devices$/,
-      async ({ params }) => ({
-        statusCode: 200,
-        body: httpUtils.createSuccess(
-          await environmentService.listDevices({
-            userId: validation.validateUserId(params.userId),
-          }),
-        ),
-      }),
+      async ({ params, searchParams }) => {
+        const tableQuery = validation.parseTableQuery(searchParams, {
+          allowedSortFields: ["userId", "nodeId", "name", "location", "lastSeenAt", "temperature", "humidity", "aqi"],
+          defaultSortBy: "lastSeenAt",
+        });
+        const filters = {
+          ...tableQuery,
+          userId: validation.validateUserId(params.userId),
+        };
+        return {
+          statusCode: 200,
+          body: httpUtils.createSuccess(
+            tableQuery.paginated
+              ? await environmentService.listDevicesPage(filters)
+              : await environmentService.listDevices(filters),
+          ),
+        };
+      },
       { auth: true },
     ),
     createRoute(

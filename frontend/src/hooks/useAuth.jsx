@@ -1,9 +1,10 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useState } from "react";
 import { apiRequest } from "../api/client";
 
 const AuthContext = createContext(null);
 const TOKEN_KEY = "env-surveillance-admin-token";
 const ADMIN_KEY = "env-surveillance-admin-profile";
+const LEGACY_SESSION_KEY = "env-surveillance-admin-session";
 
 function readStoredAdmin() {
   try {
@@ -17,16 +18,26 @@ function readStoredAdmin() {
 export function AuthProvider({ children }) {
   const [token, setToken] = useState(() => localStorage.getItem(TOKEN_KEY) || "");
   const [admin, setAdmin] = useState(() => readStoredAdmin());
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(() => Boolean(localStorage.getItem(TOKEN_KEY)));
+
+  const clearStoredSession = useCallback(() => {
+    localStorage.removeItem(TOKEN_KEY);
+    localStorage.removeItem(ADMIN_KEY);
+    localStorage.removeItem(LEGACY_SESSION_KEY);
+    setToken("");
+    setAdmin(null);
+  }, []);
 
   useEffect(() => {
     if (!token) {
       setAdmin(null);
       setLoading(false);
-      return;
+      return undefined;
     }
 
     let cancelled = false;
+    setLoading(true);
+
     apiRequest("/api/v1/admin/me", { token })
       .then((profile) => {
         if (!cancelled) {
@@ -34,14 +45,22 @@ export function AuthProvider({ children }) {
           setAdmin(profile);
         }
       })
-      .catch(() => {
-        // Keep the stored session. A network hiccup should not force a fresh login.
+      .catch((error) => {
+        if (!cancelled && error.status === 401) {
+          clearStoredSession();
+        }
+        // Keep the stored session on other failures. A network hiccup should not force a fresh login.
+      })
+      .finally(() => {
+        if (!cancelled) {
+          setLoading(false);
+        }
       });
 
     return () => {
       cancelled = true;
     };
-  }, [token]);
+  }, [clearStoredSession, token]);
 
   async function login(credentials) {
     const result = await apiRequest("/api/v1/admin/login", {
@@ -51,13 +70,14 @@ export function AuthProvider({ children }) {
 
     localStorage.setItem(TOKEN_KEY, result.token);
     localStorage.setItem(ADMIN_KEY, JSON.stringify(result.admin));
-    localStorage.removeItem("env-surveillance-admin-session");
+    localStorage.removeItem(LEGACY_SESSION_KEY);
+    setLoading(false);
     setToken(result.token);
     setAdmin(result.admin);
     return result.admin;
   }
 
-  async function logout() {
+  const logout = useCallback(async () => {
     try {
       if (token) {
         await apiRequest("/api/v1/admin/logout", {
@@ -69,12 +89,8 @@ export function AuthProvider({ children }) {
       // The local session is still cleared if the network request fails.
     }
 
-    localStorage.removeItem(TOKEN_KEY);
-    localStorage.removeItem(ADMIN_KEY);
-    localStorage.removeItem("env-surveillance-admin-session");
-    setToken("");
-    setAdmin(null);
-  }
+    clearStoredSession();
+  }, [clearStoredSession, token]);
 
   return (
     <AuthContext.Provider

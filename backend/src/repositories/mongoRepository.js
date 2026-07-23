@@ -35,6 +35,78 @@ class MongoRepository {
   createGeneratedNodeId() {
     return new ObjectId().toHexString();
   }
+  escapeRegex(value) {
+    return String(value || "").replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  }
+
+  createPagedResult(items, total, options) {
+    return {
+      items,
+      total,
+      page: options.page,
+      pageSize: options.pageSize,
+      totalPages: Math.max(1, Math.ceil(total / options.pageSize)),
+      sortBy: options.sortBy,
+      sortDir: options.sortDir,
+      search: options.search || "",
+    };
+  }
+
+  buildDeviceQuery(filters = {}) {
+    const query = {};
+    if (filters.userId) {
+      query.userId = filters.userId;
+    }
+
+    if (filters.search) {
+      const regex = new RegExp(this.escapeRegex(filters.search), "i");
+      query.$or = [
+        { userId: regex },
+        { nodeId: regex },
+        { name: regex },
+        { location: regex },
+      ];
+    }
+
+    return query;
+  }
+
+  buildReadingQuery(filters = {}) {
+    const query = {};
+
+    if (filters.userId) {
+      query.userId = filters.userId;
+    }
+
+    if (filters.nodeId) {
+      query.nodeId = filters.nodeId;
+    }
+
+    if (filters.abnormal) {
+      query.isAbnormal = true;
+    }
+
+    if (filters.from || filters.to) {
+      query.timestamp = {};
+      if (filters.from) {
+        query.timestamp.$gte = filters.from;
+      }
+      if (filters.to) {
+        query.timestamp.$lte = filters.to;
+      }
+    }
+
+    if (filters.search) {
+      const regex = new RegExp(this.escapeRegex(filters.search), "i");
+      query.$or = [{ userId: regex }, { nodeId: regex }];
+    }
+
+    return query;
+  }
+
+  getSortDirection(sortDir) {
+    return sortDir === "asc" ? 1 : -1;
+  }
 
   getCachedValue(key) {
     const entry = this.cache[key];

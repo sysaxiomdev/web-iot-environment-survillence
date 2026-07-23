@@ -10,7 +10,7 @@ function ApiDocsPage() {
           <h2>API documentation</h2>
           <p className="section-copy">
             Internal API reference for the admin panel, ingestion endpoints, and the user-first
-            Firestore structure.
+            MongoDB structure.
           </p>
         </div>
       </header>

@@ -1,18 +1,54 @@
-import { useEffect, useMemo, useState } from "react";
+import { useDeferredValue, useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { apiRequest } from "../api/client";
 import { formatDateTime, formatNumber } from "../api/format";
+import ServerTableControls, { SortHeader } from "../components/ServerTableControls";
 import StatusPill from "../components/StatusPill";
 import SummaryCard from "../components/SummaryCard";
 import TrendChart from "../components/TrendChart";
 import { useAuth } from "../hooks/useAuth";
 import Loader from "../components/Loader";
 
+const initialTableState = {
+  page: 1,
+  pageSize: 10,
+  sortBy: "timestamp",
+  sortDir: "desc",
+};
+
+const initialReadingsPage = {
+  items: [],
+  total: 0,
+  page: 1,
+  pageSize: 10,
+  totalPages: 1,
+  sortBy: "timestamp",
+  sortDir: "desc",
+  search: "",
+};
+
+function createReadingsQuery(tableState, search) {
+  const params = new URLSearchParams();
+  params.set("page", tableState.page);
+  params.set("pageSize", tableState.pageSize);
+  params.set("sortBy", tableState.sortBy);
+  params.set("sortDir", tableState.sortDir);
+  if (search) {
+    params.set("search", search);
+  }
+  return params.toString();
+}
 function DashboardPage() {
-  const { token } = useAuth();
+  const { token, logout } = useAuth();
   const [users, setUsers] = useState([]);
+  const [usersLoading, setUsersLoading] = useState(true);
   const [selectedUserId, setSelectedUserId] = useState("");
   const [summary, setSummary] = useState(null);
+  const [readingsPage, setReadingsPage] = useState(initialReadingsPage);
+  const [tableState, setTableState] = useState(initialTableState);
+  const [readingSearch, setReadingSearch] = useState("");
+  const deferredReadingSearch = useDeferredValue(readingSearch);
+  const [readingsLoading, setReadingsLoading] = useState(false);
   const [error, setError] = useState("");
   const [selectedAlert, setSelectedAlert] = useState(null);
 
@@ -44,6 +80,7 @@ function DashboardPage() {
 
   useEffect(() => {
     let cancelled = false;
+    setUsersLoading(true);
 
     apiRequest("/api/v1/users", { token })
       .then((data) => {
@@ -53,8 +90,17 @@ function DashboardPage() {
         }
       })
       .catch((requestError) => {
+        if (!cancelled && requestError.status === 401) {
+          logout();
+          return;
+        }
         if (!cancelled) {
           setError(requestError.message);
+        }
+      })
+      .finally(() => {
+        if (!cancelled) {
+          setUsersLoading(false);
         }
       });
 
@@ -78,6 +124,10 @@ function DashboardPage() {
         }
       })
       .catch((requestError) => {
+        if (!cancelled && requestError.status === 401) {
+          logout();
+          return;
+        }
         if (!cancelled) {
           setError(requestError.message);
         }
@@ -86,8 +136,52 @@ function DashboardPage() {
     return () => {
       cancelled = true;
     };
-  }, [selectedUserId, token]);
+  }, [logout, selectedUserId, token]);
 
+
+  useEffect(() => {
+    setTableState((current) => ({ ...current, page: 1 }));
+  }, [deferredReadingSearch, selectedUserId]);
+
+  useEffect(() => {
+    if (!selectedUserId) {
+      return undefined;
+    }
+
+    let cancelled = false;
+    setReadingsLoading(true);
+
+    apiRequest(
+      `/api/v1/users/${selectedUserId}/environmental-data?${createReadingsQuery(
+        tableState,
+        deferredReadingSearch,
+      )}`,
+      { token },
+    )
+      .then((data) => {
+        if (!cancelled) {
+          setReadingsPage(data);
+        }
+      })
+      .catch((requestError) => {
+        if (!cancelled && requestError.status === 401) {
+          logout();
+          return;
+        }
+        if (!cancelled) {
+          setError(requestError.message);
+        }
+      })
+      .finally(() => {
+        if (!cancelled) {
+          setReadingsLoading(false);
+        }
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [deferredReadingSearch, logout, selectedUserId, tableState, token]);
   useEffect(() => {
     if (!selectedAlert) {
       return undefined;
@@ -107,13 +201,36 @@ function DashboardPage() {
     () => users.map((userId) => ({ value: userId, label: userId })),
     [users],
   );
+  function handleSort(sortBy) {
+    setTableState((current) => ({
+      ...current,
+      page: 1,
+      sortBy,
+      sortDir: current.sortBy === sortBy && current.sortDir === "asc" ? "desc" : "asc",
+    }));
+  }
+
+  function updatePageSize(pageSize) {
+    setTableState((current) => ({ ...current, page: 1, pageSize }));
+  }
+
+  function movePage(direction) {
+    setTableState((current) => ({
+      ...current,
+      page: Math.min(Math.max(1, current.page + direction), readingsPage.totalPages || 1),
+    }));
+  }
 
   if (error) {
     return <div className="screen-state">Failed to load dashboard: {error}</div>;
   }
 
+  if (usersLoading) {
+    return <Loader label="Loading dashboard..." />;
+  }
+
   if (!selectedUserId && users.length === 0) {
-    return <div className="screen-state">No users found in Firestore.</div>;
+    return <div className="screen-state">No users found in MongoDB.</div>;
   }
 
   if (!summary) {
@@ -193,50 +310,86 @@ function DashboardPage() {
 
       <div className="content-grid">
         <section className="panel">
-          <div className="panel__header">
-            <h3>User and nodes</h3>
-            <Link to="/devices" className="text-link">
-              All devices
-            </Link>
+          <div className="panel__header panel__header--stacked">
+            <div className="panel__header-row">
+              <h3>User and nodes</h3>
+              <Link to="/devices" className="text-link">
+                All devices
+              </Link>
+            </div>
+            <ServerTableControls
+              search={readingSearch}
+              onSearchChange={setReadingSearch}
+              pageSize={tableState.pageSize}
+              onPageSizeChange={updatePageSize}
+              page={readingsPage.page}
+              totalPages={readingsPage.totalPages}
+              total={readingsPage.total}
+              loading={readingsLoading}
+              itemLabel="readings"
+              searchPlaceholder="Search node"
+              onPreviousPage={() => movePage(-1)}
+              onNextPage={() => movePage(1)}
+            />
           </div>
-          <div className="table-wrap">
+          {readingsLoading ? <Loader label="Loading readings..." /> : null}
+          <div className="table-wrap" hidden={readingsLoading}>
             <table>
               <thead>
                 <tr>
-                  <th>User</th>
-                  <th>Node</th>
-                  <th>Timestamp</th>
-                  <th>Temp</th>
-                  <th>Humidity</th>
-                  <th>AQI</th>
-                  <th>Status</th>
+                  <th>
+                    <SortHeader field="userId" label="User" {...tableState} onSort={handleSort} />
+                  </th>
+                  <th>
+                    <SortHeader field="nodeId" label="Node" {...tableState} onSort={handleSort} />
+                  </th>
+                  <th>
+                    <SortHeader field="timestamp" label="Timestamp" {...tableState} onSort={handleSort} />
+                  </th>
+                  <th>
+                    <SortHeader field="temperature" label="Temp" {...tableState} onSort={handleSort} />
+                  </th>
+                  <th>
+                    <SortHeader field="humidity" label="Humidity" {...tableState} onSort={handleSort} />
+                  </th>
+                  <th>
+                    <SortHeader field="aqi" label="AQI" {...tableState} onSort={handleSort} />
+                  </th>
+                  <th>
+                    <SortHeader field="state" label="Status" {...tableState} onSort={handleSort} />
+                  </th>
                 </tr>
               </thead>
               <tbody>
-                {summary.latestReadings.map((reading) => (
-                  <tr key={reading.id}>
-                    <td>
-                      <code>{reading.userId || selectedUserId}</code>
-                    </td>
-                    <td>
-                      <Link to={`/devices/${reading.userId || selectedUserId}/${reading.nodeId}`}>
-                        {reading.nodeId}
-                      </Link>
-                    </td>
-                    <td>{formatDateTime(reading.timestamp)}</td>
-                    <td>{formatNumber(reading.temperature, " C")}</td>
-                    <td>{formatNumber(reading.humidity, "%")}</td>
-                    <td>{formatNumber(reading.aqi)}</td>
-                    <td>
-                      <StatusPill status={reading.isAbnormal ? "alert" : "normal"} />
-                    </td>
+                {readingsPage.items.length === 0 ? (
+                  <tr>
+                    <td colSpan="7" className="empty-cell">No readings found in MongoDB.</td>
                   </tr>
-                ))}
+                ) : (
+                  readingsPage.items.map((reading) => (
+                    <tr key={reading.id}>
+                      <td>
+                        <code>{reading.userId || selectedUserId}</code>
+                      </td>
+                      <td>
+                        <Link to={`/devices/${reading.userId || selectedUserId}/${reading.nodeId}`}>
+                          {reading.nodeId}
+                        </Link>
+                      </td>
+                      <td>{formatDateTime(reading.timestamp)}</td>
+                      <td>{formatNumber(reading.temperature, " C")}</td>
+                      <td>{formatNumber(reading.humidity, "%")}</td>
+                      <td>{formatNumber(reading.aqi)}</td>
+                      <td>
+                        <StatusPill status={reading.isAbnormal ? "alert" : "normal"} />
+                      </td>
+                    </tr>
+                  ))
+                )}
               </tbody>
             </table>
           </div>
         </section>
-
         <section className="panel">
           <div className="panel__header">
             <h3>Recent alerts</h3>
