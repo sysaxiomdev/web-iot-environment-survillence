@@ -2,3 +2,4 @@ Admin credentials are stored in the MongoDB admin collection.
 Use `npm run seed:admin -- <admin-email> <admin-password>` from `backend` to update them.
 
 Confluence : https://sysaxiom.atlassian.net/wiki/spaces/MP/pages/36864091/PECE002+IoT-Based+Smart+Environmental+Monitoring+System
+Git : https://github.com/sysaxiomdev/web-iot-environment-survillence
