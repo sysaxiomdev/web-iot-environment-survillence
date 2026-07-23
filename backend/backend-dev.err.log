@@ -528,4 +528,27 @@ Error: listen EADDRINUSE: address already in use :::4000
     at Module.load (node:internal/modules/cjs/loader:1119:32)
     at Module._load (node:internal/modules/cjs/loader:960:12)
     at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:81:12)
-    at
+    at node:internal/main/run_main_module:23:47
+Emitted 'error' event on Server instance at:
+    at emitErrorNT (node:net:1778:8)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21) {
+  code: 'EADDRINUSE',
+  errno: -4091,
+  syscall: 'listen',
+  address: '::',
+  port: 4000
+}
+
+Node.js v18.17.0
+/vm:73:18)
+    at wrapSafe (node:internal/modules/cjs/loader:1178:20)
+    at Module._compile (node:internal/modules/cjs/loader:1220:27)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1310:10)
+    at Module.load (node:internal/modules/cjs/loader:1119:32)
+    at Module._load (node:internal/modules/cjs/loader:960:12)
+    at Module.require (node:internal/modules/cjs/loader:1143:19)
+    at require (node:internal/modules/cjs/helpers:110:18)
+    at Object.<anonymous> (C:\Users\sulth\workspace\sysaxiom\sysaxiom_apps\z_iot\web-iot-environment-survillence\backend\src\app.js:6:14)
+    at Module._compile (node:internal/modules/cjs/loader:1256:14)
+
+Node.js v18.17.0

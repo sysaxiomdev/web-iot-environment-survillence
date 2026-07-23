@@ -1,0 +1,3 @@
+[2026-07-16T11:37:58.785Z] [api] [INFO] Using MongoDB repository
+[2026-07-16T11:37:58.799Z] [api] [INFO] Backend listening {"port":4000,"requestedStorageProvider":"mongodb","storageProvider":"mongodb"}
+[2026-07-16T11:37:59.354Z] [api] [INFO] Admin bootstrap skipped; admin already exists {"count":1}

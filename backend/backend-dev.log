@@ -103,6 +103,9 @@ rver.js'
 [2026-07-07T20:07:22.363Z] [api] [INFO] Using MongoDB repository
 [2026-07-07T20:07:22.381Z] [api] [INFO] Backend listening {"port":4000,"requestedStorageProvider":"mongodb","storageProvider":"mongodb"}
 [2026-07-07T20:07:22.977Z] [api] [INFO] Admin bootstrap skipped; admin already exists {"count":1}
-] Using MongoDB repository
 Failed running 'src/server.js'
-Restarting '
+ed running 'src/server.js'
+Restarting 'Restarting 'srcFailed runniFailed running 'srcRestarting 'src/server.js'
+[2026-07-07T20:07:22.409Z] [api] [INFO] Using MongoDB repository
+Failed running 'src/server.js'
+/server.js'
